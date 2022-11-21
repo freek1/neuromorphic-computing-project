@@ -1,4 +1,4 @@
-# neuromorphic-computing-project
+# Neuromorphic Computing Project
 
 The aim of the project is to replicate the spoken digit classification SNN described by Dong et al. in Nengo.
 This project is inspired by earlier done research by Dong et al., which showed high performance in two different situations (97.5\% and 93.8\% resp.).
