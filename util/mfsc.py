@@ -9,6 +9,7 @@ from python_speech_features import logfbank
 import os
 
 '''
+This file contains classes and methods to convert the input .mat files to filtered MSFC .npy arrays
 Code adapted from:
 https://github.com/verrannt/snn_speechrec
 Credit to Github user verrannt.
