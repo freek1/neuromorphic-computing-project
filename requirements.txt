@@ -1,3 +1,4 @@
 nengo==3.2.0
 librosa
 python_speech_features==0.6
+tqdm
