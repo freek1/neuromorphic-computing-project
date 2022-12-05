@@ -1,6 +1,9 @@
 from util.mfsc import *
 from os.path import exists
 
+# ------------------------
+# Visualizing preprocessing stages for a single training sample
+
 # load files
 handler = result_handler()
 train = handler.load_file('data/results_lib_train_digit.npy')
