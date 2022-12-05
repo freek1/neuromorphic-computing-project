@@ -67,7 +67,7 @@ for i, row in enumerate(x):
     transformed[i] = (((row - np.min(row)) * (30 - 0)) / (np.max(row) - np.min(row))) + 0
 
 # Plotting several frames of train_sample_0
-frames = [5, 16, 25]
+frames = [1, 2, 3]
 plt.figure(figsize=(12,4))
 plt.suptitle('Spike encoding of different frames for train sample "One"')
 for i,p in enumerate(frames):
@@ -84,3 +84,26 @@ if not exists(f'figures/spike_coding_one_5-16-25.pdf'):
     plt.savefig('figures/spike_coding_one_5-16-25.pdf', dpi=1000, format='pdf')
 
 plt.show()
+
+# concatenating time frames into one long spiketrain
+amt_timesteps = int(np.max(transformed[0])) #30
+amt_frames = transformed.shape[0] #41
+amt_fqbands = transformed.shape[1] #40
+
+c = 0 # for indexing spike_train
+t = 0 # for indexing x axis
+spike_train = np.zeros((2, amt_frames*amt_frames))
+
+for i, frequency_bands in enumerate(idx):
+    spike_train[:, c:c+amt_fqbands] =\
+        [transformed[i, :]+t, frequency_bands]
+    c += amt_fqbands + 1
+    t += amt_timesteps + 1
+
+plt.figure(figsize=(20, 4))
+plt.scatter(spike_train[0], spike_train[1])
+plt.xlabel('Time steps')
+plt.ylabel('Frequency bands')
+plt.title("Spike train for train sample 'One'")
+plt.show()
+
