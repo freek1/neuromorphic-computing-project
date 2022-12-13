@@ -12,7 +12,7 @@ train_samples = handler.load_file('data/results_lib_train_digit.npy')
 
 spike_trains = np.zeros([train_samples.shape[0], 2, 41*41])
 
-for nr_sample, filtered_sample in enumerate(tqdm(train_samples)):
+for nr_sample, filtered_sample in enumerate(tqdm(train_samples, desc='Computing sample')):
 
     samplerate = 20000
     duration = len(filtered_sample)/samplerate
@@ -45,21 +45,51 @@ for nr_sample, filtered_sample in enumerate(tqdm(train_samples)):
     # spike_trains stores all spike_train samples
     spike_trains[nr_sample] = spike_train
 
-# plotting three examples of spiketrains
-exs = [10, 14, 1105]
-plt.figure(figsize=(14, 8)) 
-plt.suptitle('Spoken digits converted to spike trains')
-for p, ex in enumerate(exs):
-    plt.subplot(3, 1, p+1)
-    plt.scatter(spike_trains[ex][0], spike_trains[ex][1])
-    plt.xlabel('Time steps')
-    plt.ylabel('Frequency bands')
-    plt.title(f"Train sample {ex}")
+spike_trains = np.floor(spike_trains)
 
-plt.tight_layout()
+print(spike_trains.shape)
+# # plotting three examples of spiketrains
+# exs = [10, 14, 1105]
+# plt.figure(figsize=(14, 8)) 
+# plt.suptitle('Spoken digits converted to spike trains')
+# for p, ex in enumerate(exs):
+#     plt.subplot(3, 1, p+1)
+#     plt.scatter(spike_trains[ex][0], spike_trains[ex][1])
+#     plt.xlabel('Time steps')
+#     plt.ylabel('Frequency bands')
+#     plt.title(f"Train sample {ex}")
 
-# save figure
-if not exists(f'figures/spiketrains_10-14-1105.pdf'):
-    plt.savefig('figures/spiketrains_10-14-1105.pdf', dpi=1000, format='pdf')
+# plt.tight_layout()
 
-plt.show()
+# # save figure
+# if not exists(f'figures/spiketrains_10-14-1105.pdf'):
+#     plt.savefig('figures/spiketrains_10-14-1105.pdf', dpi=1000, format='pdf')
+
+# plt.show()
+
+# save spike_trains to .npy
+amt_samples = len(train_samples)
+spike_trains01 = np.zeros((amt_fqbands, amt_frames*amt_frames))
+all_spike_trains = np.zeros((amt_samples, spike_trains01.shape[0], spike_trains01.shape[1]))
+
+
+# computing spike trains
+if not exists('data/spike_trains_train.npy'):
+
+    for i, spike_train in enumerate(tqdm(spike_trains, desc='Spike trains')):
+        spike_trains01 = np.zeros((amt_fqbands, amt_frames*amt_frames))
+        for f_band in range(amt_fqbands):
+            arr = np.array([i for i, x in enumerate(spike_train[1]) if x == f_band])
+            idx = spike_train[0][arr]
+            idx = idx[idx != 0]
+            st = spike_trains01[f_band,:] 
+            idx = idx.astype(int)
+            np.put(st, idx, 1)
+            spike_trains01[f_band,:] = st
+        all_spike_trains[i] = spike_trains01
+
+    # Saving files
+    handler = result_handler()
+    handler.save_file('data/spike_trains_train.npy', all_spike_trains)
+    print('saved train')
+
