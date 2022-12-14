@@ -69,7 +69,7 @@ print(spike_trains.shape)
 
 # save spike_trains to .npy
 amt_samples = len(train_samples)
-spike_trains01 = np.zeros((amt_fqbands, amt_frames*amt_frames))
+spike_trains01 = np.zeros((amt_fqbands, 1300))
 all_spike_trains = np.zeros((amt_samples, spike_trains01.shape[0], spike_trains01.shape[1]))
 
 
@@ -86,7 +86,7 @@ if not exists('data/spike_trains_train.npy'):
             idx = idx.astype(int)
             np.put(st, idx, 1)
             spike_trains01[f_band,:] = st
-        all_spike_trains[i] = spike_trains01
+        all_spike_trains[i] = spike_trains01[:,0:1300]
 
     # Saving files
     handler = result_handler()
