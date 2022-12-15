@@ -48,30 +48,11 @@ for nr_sample, filtered_sample in enumerate(tqdm(train_samples, desc='Computing 
 spike_trains = np.floor(spike_trains)
 
 print(spike_trains.shape)
-# # plotting three examples of spiketrains
-# exs = [10, 14, 1105]
-# plt.figure(figsize=(14, 8)) 
-# plt.suptitle('Spoken digits converted to spike trains')
-# for p, ex in enumerate(exs):
-#     plt.subplot(3, 1, p+1)
-#     plt.scatter(spike_trains[ex][0], spike_trains[ex][1])
-#     plt.xlabel('Time steps')
-#     plt.ylabel('Frequency bands')
-#     plt.title(f"Train sample {ex}")
-
-# plt.tight_layout()
-
-# # save figure
-# if not exists(f'figures/spiketrains_10-14-1105.pdf'):
-#     plt.savefig('figures/spiketrains_10-14-1105.pdf', dpi=1000, format='pdf')
-
-# plt.show()
 
 # save spike_trains to .npy
 amt_samples = len(train_samples)
-spike_trains01 = np.zeros((amt_fqbands, 1300))
+spike_trains01 = np.zeros((amt_fqbands, 31*41)) # n_timesteps * n_timeframes
 all_spike_trains = np.zeros((amt_samples, spike_trains01.shape[0], spike_trains01.shape[1]))
-
 
 # computing spike trains
 if not exists('data/spike_trains_train.npy'):
@@ -86,10 +67,10 @@ if not exists('data/spike_trains_train.npy'):
             idx = idx.astype(int)
             np.put(st, idx, 1)
             spike_trains01[f_band,:] = st
-        all_spike_trains[i] = spike_trains01[:,0:1300]
+        all_spike_trains[i] = spike_trains01[:,0:1271]
 
     # Saving files
     handler = result_handler()
     handler.save_file('data/spike_trains_train.npy', all_spike_trains)
-    print('saved train')
+    print('Saved train data: ', all_spike_trains.shape)
 
