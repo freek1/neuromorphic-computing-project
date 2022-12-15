@@ -15,8 +15,10 @@ nengo_shape = np.reshape(spike_trains_train, (2464, 40, 41, 31))
 
 print(nengo_shape.shape)
 
-plt.figure(figsize=(5,5))
-plt.imshow(nengo_shape[0, :, 0, :], cmap='gray_r')
+fig, ax = plt.subplots(1, 12, sharex=True, sharey=True)
+for i in range(12):
+    ax[i].imshow(nengo_shape[0, :, i, :], cmap='gray_r')
+    ax[i].set_title(i)
 plt.show()
 
 # You should acces the nengo_shape matrix as follows:
