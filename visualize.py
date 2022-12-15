@@ -5,13 +5,13 @@ from os.path import exists
 handler = result_handler()
 spike_trains_train = handler.load_file('data/spike_trains_train.npy')
 
-# 31 * 41 = 1271
+# 30 * 41 = 1230
 n_samples = 2464
 n_freqbands = 40
 n_timeframes = 41
-n_timesteps = 31 # actually 30 but then it doesnt fit??
+n_timesteps = 30
 
-nengo_shape = np.reshape(spike_trains_train, (2464, 40, 41, 31))
+nengo_shape = np.reshape(spike_trains_train, (2464, 40, 41, 30))
 
 print(nengo_shape.shape)
 

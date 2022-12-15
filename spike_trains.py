@@ -1,8 +1,6 @@
 from util.mfsc import *
 from os.path import exists
 
-mat = scipy.io.loadmat('data/TIDIGIT_train.mat')
-
 # --------------------------
 # Making spike trains for all train samples
 
@@ -24,7 +22,7 @@ for nr_sample, filtered_sample in enumerate(tqdm(train_samples, desc='Computing 
     x = np.atleast_2d(filtered_sample)
     transformed = np.zeros(x.shape)
     for i, row in enumerate(x):
-        transformed[i] = (((row - np.min(row)) * (30 - 0)) / (np.max(row) - np.min(row))) + 0
+        transformed[i] = (((row - np.min(row)) * (29 - 0)) / (np.max(row) - np.min(row))) + 0
 
     # concatenating time frames into one spiketrain
     amt_timesteps = int(np.max(transformed[0])) #30
@@ -51,7 +49,7 @@ print(spike_trains.shape)
 
 # save spike_trains to .npy
 amt_samples = len(train_samples)
-spike_trains01 = np.zeros((amt_fqbands, 31*41)) # n_timesteps * n_timeframes
+spike_trains01 = np.zeros((amt_fqbands, 30*41)) # n_timesteps * n_timeframes
 all_spike_trains = np.zeros((amt_samples, spike_trains01.shape[0], spike_trains01.shape[1]))
 
 # computing spike trains
@@ -67,7 +65,7 @@ if not exists('data/spike_trains_train.npy'):
             idx = idx.astype(int)
             np.put(st, idx, 1)
             spike_trains01[f_band,:] = st
-        all_spike_trains[i] = spike_trains01[:,0:1271]
+        all_spike_trains[i] = spike_trains01[:,0:30*41]
 
     # Saving files
     handler = result_handler()
