@@ -67,6 +67,8 @@ if not exists('data/spike_trains_train.npy'):
             spike_trains01[f_band,:] = st
         all_spike_trains[i] = spike_trains01[:,0:30*41]
 
+    all_spike_trains = np.reshape(all_spike_trains, (2464, 40, 41, 30))
+    
     # Saving files
     handler = result_handler()
     handler.save_file('data/spike_trains_train.npy', all_spike_trains)
