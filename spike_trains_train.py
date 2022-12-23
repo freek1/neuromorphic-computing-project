@@ -55,7 +55,7 @@ all_spike_trains = np.zeros((amt_samples, spike_trains01.shape[0], spike_trains0
 # computing spike trains
 if not exists('data/spike_trains_train.npy'):
 
-    for i, spike_train in enumerate(tqdm(spike_trains, desc='Spike trains')):
+    for i, spike_train in enumerate(tqdm(spike_trains, desc='Spike trains train')):
         spike_trains01 = np.zeros((amt_fqbands, amt_frames*amt_frames))
         for f_band in range(amt_fqbands):
             arr = np.array([i for i, x in enumerate(spike_train[1]) if x == f_band])
@@ -68,9 +68,8 @@ if not exists('data/spike_trains_train.npy'):
         all_spike_trains[i] = spike_trains01[:,0:30*41]
 
     all_spike_trains = np.reshape(all_spike_trains, (2464, 40, 41, 30))
-    
+     
     # Saving files
     handler = result_handler()
     handler.save_file('data/spike_trains_train.npy', all_spike_trains)
     print('Saved train data: ', all_spike_trains.shape)
-
