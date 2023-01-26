@@ -7,16 +7,17 @@ Dong M, Huang X, Xu B (2018) Unsupervised speech recognition through spike-timin
 
 ## Preprocessing of the data
 INSTRUCTIONS:
-To convert the .mat TIDIGIT database to the .npy format this project uses, run the following files:
 
-1. Make sure you have downloaded TIDIGIT_train.mat and TIDIGIT_test.mat in the data folder.
-2. Run util/mat2npy.py to convert the .mat files into preprocessed (and MFSC filtered) .npy data (train and test, data and labels) files.
-    - Creates: data/results_lib_train_digit.npy, data/results_lib_test_digit.npy, data/train_labels.npy and data/test_labels.npy
-3. Run util/spike_trains_train.py to convert the preprocessed .npy file into spike trains
-    - Creates: data/spike_trains_train.npy
-4. Run util/spike_trains_test.py to convert the preprocessed .npy file into spike trains
-    - Creates: data/spike_trains_test.npy
-5. Optional: To create the figures to visualize the preprocessing stages, run visualize_preprocess.py
+To convert the `.mat` TIDIGIT database to the `.npy` format this project uses, run the following files:
+
+1. Make sure you have downloaded `TIDIGIT_train.mat` and `TIDIGIT_test.mat` in the data folder.
+2. Run `util/mat2npy.py` to convert the `.mat` files into preprocessed (and MFSC filtered) `.npy` data (train and test, data and labels) files.
+    - Creates: `data/results_lib_train_digit.npy`, `data/results_lib_test_digit.npy`, `data/train_labels.npy` and `data/test_labels.npy`
+3. Run `util/spike_trains_train.py` to convert the preprocessed `.npy` file into spike trains
+    - Creates: `data/spike_trains_train.npy`
+4. Run `util/spike_trains_test.py` to convert the preprocessed `.npy` file into spike trains
+    - Creates: `data/spike_trains_test.npy`
+5. Optional: To create the figures to visualize the preprocessing stages, run `visualize_preprocess.py`
 
 ## Processing audio into spikes
 The audio files are preprocessed by passing them through a MFSC filter making for 41 frames with 40 frequency bands per sample, resulting in e.g. figure 1A below. The spikes for each frame are computed by time-to-first-spike encoding for each frequency band in 30 time steps, i.e. a higher activity in a frequency band in a frame results in a spike at an earlier time step for that frequency band, see figure 1B.
