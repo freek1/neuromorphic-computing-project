@@ -6,11 +6,11 @@ from os.path import exists
 
 # load files
 handler = result_handler()
-test_samples = handler.load_file('data/results_lib_test_digit.npy')
+train_samples = handler.load_file('results_lib_train_digit.npy')
 
-spike_trains = np.zeros([test_samples.shape[0], 2, 41*41])
+spike_trains = np.zeros([train_samples.shape[0], 2, 41*41])
 
-for nr_sample, filtered_sample in enumerate(tqdm(test_samples, desc='Computing sample')):
+for nr_sample, filtered_sample in enumerate(tqdm(train_samples, desc='Computing sample')):
 
     samplerate = 20000
     duration = len(filtered_sample)/samplerate
@@ -48,14 +48,14 @@ spike_trains = np.floor(spike_trains)
 print(spike_trains.shape)
 
 # save spike_trains to .npy
-amt_samples = len(test_samples)
+amt_samples = len(train_samples)
 spike_trains01 = np.zeros((amt_fqbands, 30*41)) # n_timesteps * n_timeframes
 all_spike_trains = np.zeros((amt_samples, spike_trains01.shape[0], spike_trains01.shape[1]))
 
 # computing spike trains
-if not exists('data/spike_trains_test.npy'):
+if not exists('data/spike_trains_train.npy'):
 
-    for i, spike_train in enumerate(tqdm(spike_trains, desc='Spike trains test')):
+    for i, spike_train in enumerate(tqdm(spike_trains, desc='Spike trains train')):
         spike_trains01 = np.zeros((amt_fqbands, amt_frames*amt_frames))
         for f_band in range(amt_fqbands):
             arr = np.array([i for i, x in enumerate(spike_train[1]) if x == f_band])
@@ -67,9 +67,9 @@ if not exists('data/spike_trains_test.npy'):
             spike_trains01[f_band,:] = st
         all_spike_trains[i] = spike_trains01[:,0:30*41]
 
-    all_spike_trains = np.reshape(all_spike_trains, (2486, 40, 41, 30))
-    
+    all_spike_trains = np.reshape(all_spike_trains, (2464, 40, 41, 30))
+     
     # Saving files
     handler = result_handler()
-    handler.save_file('data/spike_trains_test.npy', all_spike_trains)
-    print('Saved test data: ', all_spike_trains.shape)
+    handler.save_file('data/spike_trains_train.npy', all_spike_trains)
+    print('Saved train data: ', all_spike_trains.shape)
