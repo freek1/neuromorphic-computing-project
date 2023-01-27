@@ -16,7 +16,9 @@ To convert the `.mat` TIDIGIT database to the `.npy` format this project uses, r
 4. Run `util/spike_trains_test.py` to convert the preprocessed `.npy` file into spike trains
     - Creates: `data/spike_trains_test.npy`
 5. Optional: To create the figures to visualize the preprocessing stages, run `visualize_preprocess.py`
-6. Run `nengo_classification.py` to create the Nengo model and do the classification (this may take a few minutes)
+
+## Running the model
+To run the Nengo model and do the classification on the data, simply run `nengo_classification.py` (this may take a few minutes). The LIMIT variable may be adjusted to change the amount of samples used in the model, depending on computational strength of your device.
 
 ## Processing audio into spikes
 The audio files are preprocessed by passing them through a MFSC filter making for 41 frames with 40 frequency bands per sample, resulting in e.g. figure 1A below. The spikes for each frame are computed by time-to-first-spike encoding for each frequency band in 30 time steps, i.e. a higher activity in a frequency band in a frame results in a spike at an earlier time step for that frequency band, see figure 1B.
@@ -31,7 +33,7 @@ Finally, concatenating all 41 frames in order for each sample, results in spike 
 
 ![Figure 3](/figures/spiketrains_10-14-1105-1.png "Figure 3")
 
-## Running the model
+## The Nengo model & classification
 The model has the following architecture, as can be seen in Figure 4.
 
 ![Figure 4](/figures/model_architecture.png "Figure 4")
