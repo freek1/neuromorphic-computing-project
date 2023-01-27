@@ -35,7 +35,7 @@ threshold = 23
 thresh_config = nengo.presets.ThresholdingEnsembles(threshold) # Set the threshold
 
 # Loading data
-train = np.load("spike_trains_train_fixed2.npy")
+train = np.load("spike_trains_train.npy")
 
 train_conv = np.reshape(train, (40,41,30,2464))
 train_new = []
