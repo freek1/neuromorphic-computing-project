@@ -6,8 +6,6 @@ This project is inspired by earlier done research by Dong et al., which showed h
 Dong M, Huang X, Xu B (2018) Unsupervised speech recognition through spike-timing-dependent plasticity in a convolutional spiking neural network. PLoS ONE 13(11): e0204596. https://doi.org/10.1371/journal.pone.0204596
 
 ## Preprocessing of the data
-INSTRUCTIONS:
-
 To convert the `.mat` TIDIGIT database to the `.npy` format this project uses, run the following files:
 
 1. Make sure you have downloaded `TIDIGIT_train.mat` and `TIDIGIT_test.mat` in the data folder.
@@ -18,6 +16,8 @@ To convert the `.mat` TIDIGIT database to the `.npy` format this project uses, r
 4. Run `util/spike_trains_test.py` to convert the preprocessed `.npy` file into spike trains
     - Creates: `data/spike_trains_test.npy`
 5. Optional: To create the figures to visualize the preprocessing stages, run `visualize_preprocess.py`
+
+## Running the model
 
 ## Processing audio into spikes
 The audio files are preprocessed by passing them through a MFSC filter making for 41 frames with 40 frequency bands per sample, resulting in e.g. figure 1A below. The spikes for each frame are computed by time-to-first-spike encoding for each frequency band in 30 time steps, i.e. a higher activity in a frequency band in a frame results in a spike at an earlier time step for that frequency band, see figure 1B.
